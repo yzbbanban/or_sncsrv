@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pl.pro.sncsrv.dao.ProductDao">
+
+    <sql id="baseProduct">
+	  id , ssid , userId , detail , remark , typeId , createTime , updateTime,useable
+    </sql>
+    <!--保存产品信息-->
+    <insert id="saveProduct">
+        INSERT INTO product
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ssid != null">
+                ssid,
+            </if>
+            <if test="detail != null">
+                detail,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="typeId != null">
+                typeId,
+            </if>
+            createTime,
+            updateTime,
+            useable
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="ssid != null">
+                #{ssid,jdbcType=VARCHAR},
+            </if>
+            <if test="detail != null">
+                #{detail,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="typeId != null">
+                #{typeId,jdbcType=VARCHAR},
+            </if>
+            unix_timestamp(NOW()),
+            unix_timestamp(NOW()),
+            true
+        </trim>
+    </insert>
+    <!--更新产品信息-->
+    <update id="updateProduct">
+        UPDATE product
+        <trim prefix="set" suffixOverrides=",">
+            <if test="ssid != null">
+                ssid = #{ssid},
+            </if>
+            <if test="userId != null">
+                userId = #{userId},
+            </if>
+            <if test="detail != null">
+                detail = #{detail},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+            <if test="typeId != null">
+                typeId = #{typeId},
+            </if>
+            updateTime = unix_timestamp(NOW()),
+        </trim>
+        WHERE
+        id = #{id}
+    </update>
+
+    <!--更新产品是否可用信息-->
+    <update id="updateProductUseable">
+        UPDATE product
+        <trim prefix="set" suffixOverrides=",">
+            <if test="useable != null">
+                useable = #{useable},
+            </if>
+            updateTime = unix_timestamp(NOW()),
+        </trim>
+        WHERE
+        1=1 and useable!=#{useable} and
+        id = #{id}
+    </update>
+
+    <!--分页获取所有产品信息-->
+    <select id="listProduct" resultType="com.pl.pro.sncsrv.domain.vo.ProductVO">
+        select pr.id , pr.ssid , pr.userId , pr.detail , pr.remark ,
+        pr.typeId , pr.createTime , pr.updateTime,pr.useable,
+        td.explain,td.name
+        from
+        product pr INNER JOIN type_detail td
+        on pr.typeId=td.id
+        WHERE 1=1
+        <if test="userId != null">
+            AND pr.userId = #{userId}
+        </if>
+        limit #{pageNo},#{pageSize}
+    </select>
+
+    <!--获取产品数量-->
+    <select id="getProductCount" resultType="int">
+      SELECT COUNT(1)
+      FROM product
+    </select>
+
+    <!--产品认证-->
+    <select id="getProUidCount" resultType="int">
+      SELECT COUNT(1)
+      FROM product
+      where ssid=#{ssid}
+    </select>
+
+    <!--获取产品id-->
+    <select id="queryProIdBySid" resultType="String">
+      SELECT id
+      FROM product
+      where ssid=#{ssid}
+    </select>
+
+    <!--保存图片地址-->
+    <insert id="saveImgUrl">
+        INSERT INTO product_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="productId != null">
+                productId,
+            </if>
+            <if test="timestamp != null">
+                timestamp,
+            </if>
+            <if test="imageUrl != null">
+                imageUrl
+            </if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="productId != null">
+                #{productId,jdbcType=VARCHAR},
+            </if>
+            <if test="timestamp != null">
+               #{timestamp,jdbcType=VARCHAR},
+            </if>
+            <if test="imageUrl != null">
+                #{imageUrl,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="saveProMessage" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO productmessage
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            hasImage
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            true
+        </trim>
+    </insert>
+</mapper>

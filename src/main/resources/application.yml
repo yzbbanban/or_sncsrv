@@ -1,0 +1,21 @@
+server:
+  port: 9095
+  session:
+    timeout: 60
+spring:
+  application:
+      name: pl-prd
+  datasource:
+    url:  jdbc:mysql://39.98.186.132:3306/product?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username:  product
+    password:  123456
+    type: com.alibaba.druid.pool.DruidDataSource
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+swagger:
+  show: true
+imgpush:
+  url:  http://47.97.214.198:1118/index.php/interface/JPushImg
+
