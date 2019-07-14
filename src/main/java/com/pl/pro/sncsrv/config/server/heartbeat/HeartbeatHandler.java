@@ -58,7 +58,7 @@ public abstract class HeartbeatHandler extends SimpleChannelInboundHandler<ByteB
         } catch (Exception e) {
             LOGGER.error("心跳异常：" + ExceptionUtils.getStackTrace(e));
             removeChannel(ctx);
-            ctx.close();
+            ctx.disconnect();
         }
 //		removeChannel(ctx);
 //		ctx.close();
