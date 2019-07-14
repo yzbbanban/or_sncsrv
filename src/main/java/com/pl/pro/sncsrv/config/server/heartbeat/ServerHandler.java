@@ -1,19 +1,18 @@
 package com.pl.pro.sncsrv.config.server.heartbeat;
 
-import static com.pl.pro.sncsrv.config.server.heartbeat.ProtocolUtils.NG;
-import static com.pl.pro.sncsrv.config.server.heartbeat.ProtocolUtils.OK;
-import static com.pl.pro.sncsrv.config.server.heartbeat.ProtocolUtils.PWT;
-import static com.pl.pro.sncsrv.config.server.heartbeat.ProtocolUtils.RANDOM_SIZE;
-import static com.pl.pro.sncsrv.config.server.heartbeat.ProtocolUtils.REQUIRE_AUTH_HEAD;
-import static com.pl.pro.sncsrv.config.server.heartbeat.ProtocolUtils.readByteToHex;
+import com.pl.pro.sncsrv.config.util.SpringUtil;
+import com.pl.pro.sncsrv.service.ifac.ProductService;
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.util.Attribute;
+import io.netty.util.AttributeKey;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,22 +21,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.NameValuePair;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.pl.pro.sncsrv.config.util.SpringUtil;
-import com.pl.pro.sncsrv.service.ifac.ProductService;
-
-import io.netty.buffer.ByteBuf;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.util.Attribute;
-import io.netty.util.AttributeKey;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+import static com.pl.pro.sncsrv.config.server.heartbeat.ProtocolUtils.*;
 
 public class ServerHandler extends HeartbeatHandler {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ServerHandler.class);

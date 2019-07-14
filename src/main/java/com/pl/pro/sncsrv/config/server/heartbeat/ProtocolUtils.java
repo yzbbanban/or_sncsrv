@@ -9,15 +9,17 @@ public class ProtocolUtils {
     private ProtocolUtils() {
     }
 
-    public static final byte[] OK = { (byte) 0xFF, (byte) 0x00, (byte) 0xAA, (byte) 0x00 };
-    public static final byte[] NG = { (byte) 0xFF, (byte) 0x00, (byte) 0xAB, (byte) 0x01 };
+    //    public static final byte[] OK = { (byte) 0xFF, (byte) 0x00, (byte) 0xAA, (byte) 0x00 };
+    public static final byte[] OK = {(byte) 0xFF, (byte) 0x00, (byte) 0x55, (byte) 0x00, (byte) 0xAA, (byte) 0x55};
+    //    public static final byte[] NG = { (byte) 0xFF, (byte) 0x00, (byte) 0xAB, (byte) 0x01 };
+    public static final byte[] NG = {(byte) 0xFF, (byte) 0x00, (byte) 0x54, (byte) 0x01, (byte) 0xAA, (byte) 0x55};
     // FF 00 AA 02 00 01 00 01 00 08 01 02 03 04 05 06 07 08
-    public static final byte[] REQUIRE_AUTH_HEAD = { (byte) 0xFF, (byte) 0x00, (byte) 0xAA, (byte) 0x02, (byte) 0x00, (byte) 0x01,
-            (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x08 };
-    public static final byte[] AUTH_RESPONSE_HEAD = { (byte) 0xFF, (byte) 0x00, (byte) 0xFB, (byte) 0x02, (byte) 0x00, (byte) 0x01,
-            (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x08 };
-    public static final byte[] IMAGE_REQUIRE_HEAD = { (byte) 0xFF, (byte) 0x00, (byte) 0xFB, (byte) 0x40, (byte) 0x00, (byte) 0x01,
-            (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x08 };
+    public static final byte[] REQUIRE_AUTH_HEAD = {(byte) 0xFF, (byte) 0x00, (byte) 0xAA, (byte) 0x02, (byte) 0x00, (byte) 0x01,
+            (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x08};
+    public static final byte[] AUTH_RESPONSE_HEAD = {(byte) 0xFF, (byte) 0x00, (byte) 0xFB, (byte) 0x02, (byte) 0x00, (byte) 0x01,
+            (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x08};
+    public static final byte[] IMAGE_REQUIRE_HEAD = {(byte) 0xFF, (byte) 0x00, (byte) 0xFB, (byte) 0x40, (byte) 0x00, (byte) 0x01,
+            (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x08};
     public static final int RANDOM_SIZE = 8;
 
     public static final byte[] PWT = {
@@ -52,7 +54,7 @@ public class ProtocolUtils {
             (byte) 0x8F, (byte) 0x45, (byte) 0x57, (byte) 0xC8, (byte) 0x8E, (byte) 0xED, (byte) 0x85, (byte) 0x6D, (byte) 0x78,
             (byte) 0x3F, (byte) 0xF7, (byte) 0xA6, (byte) 0x99, (byte) 0x0F, (byte) 0x98, (byte) 0x02,
             (byte) 0x5E, (byte) 0xC6, (byte) 0x36, (byte) 0xE6, (byte) 0x16, (byte) 0x1A, (byte) 0x82, (byte) 0x61, (byte) 0x70,
-            (byte) 0xE3, (byte) 0x35, (byte) 0x9C, (byte) 0x1D, (byte) 0x53, (byte) 0x48, (byte) 0xDE };
+            (byte) 0xE3, (byte) 0x35, (byte) 0x9C, (byte) 0x1D, (byte) 0x53, (byte) 0x48, (byte) 0xDE};
 
     public static byte[] randBytes(int size) {
         byte[] bytes = new byte[size];

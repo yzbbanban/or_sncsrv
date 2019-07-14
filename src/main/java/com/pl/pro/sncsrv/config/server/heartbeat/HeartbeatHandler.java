@@ -1,7 +1,5 @@
 package com.pl.pro.sncsrv.config.server.heartbeat;
 
-import java.util.List;
-
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -9,8 +7,6 @@ import io.netty.handler.timeout.IdleStateEvent;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static com.pl.pro.sncsrv.config.server.heartbeat.ProtocolUtils.OK;
 
 public abstract class HeartbeatHandler extends SimpleChannelInboundHandler<ByteBuf> {
     private static final Logger LOGGER = LoggerFactory.getLogger(HeartbeatHandler.class);
