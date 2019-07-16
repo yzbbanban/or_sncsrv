@@ -9,10 +9,10 @@ public class ProtocolUtils {
     private ProtocolUtils() {
     }
 
-    //    public static final byte[] OK = { (byte) 0xFF, (byte) 0x00, (byte) 0xAA, (byte) 0x00 };
-    public static final byte[] OK = {(byte) 0xFF, (byte) 0x00, (byte) 0x55, (byte) 0x00, (byte) 0xAA, (byte) 0x55};
-    //    public static final byte[] NG = { (byte) 0xFF, (byte) 0x00, (byte) 0xAB, (byte) 0x01 };
-    public static final byte[] NG = {(byte) 0xFF, (byte) 0x00, (byte) 0x54, (byte) 0x01, (byte) 0xAA, (byte) 0x55};
+        public static final byte[] OK = { (byte) 0xFF, (byte) 0x00, (byte) 0xAA, (byte) 0x00 };
+//    public static final byte[] OK = {(byte) 0xFF, (byte) 0x00, (byte) 0x55, (byte) 0x00, (byte) 0xAA, (byte) 0x55};
+        public static final byte[] NG = { (byte) 0xFF, (byte) 0x00, (byte) 0xAB, (byte) 0x01 };
+//    public static final byte[] NG = {(byte) 0xFF, (byte) 0x00, (byte) 0x54, (byte) 0x01, (byte) 0xAA, (byte) 0x55};
     // FF 00 AA 02 00 01 00 01 00 08 01 02 03 04 05 06 07 08
     public static final byte[] REQUIRE_AUTH_HEAD = {(byte) 0xFF, (byte) 0x00, (byte) 0xAA, (byte) 0x02, (byte) 0x00, (byte) 0x01,
             (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x08};
