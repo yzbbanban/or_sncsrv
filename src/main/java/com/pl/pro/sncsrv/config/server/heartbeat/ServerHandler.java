@@ -476,6 +476,7 @@ public class ServerHandler extends HeartbeatHandler {
 		ctx.writeAndFlush(buf);
 	}
 
+
 	@Override
 	protected void removeChannel(ChannelHandlerContext ctx) {
 		Channel channel = ctx.channel();
