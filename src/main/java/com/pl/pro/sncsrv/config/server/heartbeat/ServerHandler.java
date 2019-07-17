@@ -124,6 +124,7 @@ public class ServerHandler extends HeartbeatHandler {
 				return;
 			}
 		} else if (judgeType(data, SEND_IMAGE)) {
+			//第几次传输
 			int num = byteToInt(data[6]) << 8 | byteToInt(data[7]);
 			if (isDataInvalid(data)) {
 				ByteBuf buff = ctx.channel().alloc().buffer();
@@ -131,6 +132,7 @@ public class ServerHandler extends HeartbeatHandler {
 				ctx.writeAndFlush(buff);
 				LOGGER.error("缓存第" + num + "条图片数据失败，" + "+图片数据格式不争确");
 			}
+			//获取map中的图片
 			List<byte[]> picList = picMap.get(ctx.channel());
 			if (null == picList) {
 				picList = new ArrayList<byte[]>();
@@ -144,6 +146,7 @@ public class ServerHandler extends HeartbeatHandler {
 				picList.add(data);
 				LOGGER.info("保存第" + picList.size() + "条图片数据");
 			}
+			//获取要传多少次
 			int sum = byteToInt(data[4]) << 8 | byteToInt(data[5]);
 //			if (null == picMap.get(ctx.channel())) {
 //				picMap.put(ctx.channel(), new ArrayList<Byte>());
