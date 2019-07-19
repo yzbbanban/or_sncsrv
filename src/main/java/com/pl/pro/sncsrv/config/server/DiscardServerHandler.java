@@ -148,7 +148,7 @@
 //            }
 //
 //            offset = offset & 255;
-//            //channel id  ： offset
+//            //channel id  ： offsetHexUtil
 //            proOffset.put(incoming.id() + "", offset);
 //
 //            System.out.println("-----offset-----> " + offset);
