@@ -91,9 +91,10 @@ public class ServerHandler extends HeartbeatHandler {
 
     protected void channelRead(ChannelHandlerContext ctx, byte[] data) throws Exception {
 
-        System.err.println(System.currentTimeMillis() + "处理数据,长度=" + data.length + readByteToHex(data));
         Channel channel = ctx.channel();
         String channelId = ctx.channel().id().asLongText();
+        System.err.println("时间：" + System.currentTimeMillis() + " id: "
+                + channelId + "处理数据,长度=" + data.length + readByteToHex(data));
 
         if ((data[3] == (byte) 0x02 && 18 == data.length) || authChannel.contains(channel)) {
             if (Arrays.equals(data, ProtocolUtils.OK)) {
@@ -452,6 +453,7 @@ public class ServerHandler extends HeartbeatHandler {
     }
 
     private void replyAuthRequire(ChannelHandlerContext ctx, String channelId) {
+        LOGGER.info("replyAuthRequire==>" + channelId);
         byte[] randBytes = ProtocolUtils.randBytes(RANDOM_SIZE);
         LOGGER.info("rand bytes:{}", readByteToHex(randBytes));
         // 计算sum
@@ -474,6 +476,7 @@ public class ServerHandler extends HeartbeatHandler {
 
     @Override
     protected void replayHeartChannel(ChannelHandlerContext ctx) {
+        LOGGER.info("replayHeartChannel==>" + ctx.channel().id().asLongText());
         ByteBuf buf = ctx.channel().alloc().buffer();
         buf.writeBytes(OK);
         ctx.writeAndFlush(buf);
@@ -488,6 +491,7 @@ public class ServerHandler extends HeartbeatHandler {
     }
 
     private void replyHeartBeat(ChannelHandlerContext ctx) {
+        LOGGER.info("replayHeartBeat==>" + ctx.channel().id().asLongText());
         ByteBuf buf = ctx.channel().alloc().buffer();
         buf.writeBytes(OK);
         ctx.writeAndFlush(buf);

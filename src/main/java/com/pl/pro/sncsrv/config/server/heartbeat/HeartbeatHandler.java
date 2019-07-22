@@ -41,16 +41,16 @@ public abstract class HeartbeatHandler extends SimpleChannelInboundHandler<ByteB
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        LOGGER.error("---" + ctx.channel().remoteAddress() + " is active---");
+        LOGGER.error(ctx.channel().id().asLongText() + "---" + ctx.channel().remoteAddress() + " is active---");
     }
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        LOGGER.error("---" + ctx.channel().remoteAddress() + " is inactive---");
+        LOGGER.error(ctx.channel().id().asLongText() + "---" + ctx.channel().remoteAddress() + " is inactive---");
     }
 
     protected void handleReaderIdle(ChannelHandlerContext ctx) {
-        LOGGER.error("---READER_IDLE---");
+        LOGGER.error(ctx.channel().id().asLongText() + "---READER_IDLE---");
         //心跳重新恢复
         try {
             replayHeartChannel(ctx);
@@ -65,7 +65,7 @@ public abstract class HeartbeatHandler extends SimpleChannelInboundHandler<ByteB
     }
 
     protected void handleWriterIdle(ChannelHandlerContext ctx) {
-        System.err.println("---WRITER_IDLE---");
+        LOGGER.error(ctx.channel().id().asLongText() + "---WRITER_IDLE---");
     }
 
     protected void handleAllIdle(ChannelHandlerContext ctx) {
