@@ -132,6 +132,7 @@ public class ServerHandler extends HeartbeatHandler {
                 buff.writeBytes(NG);
                 ctx.writeAndFlush(buff);
                 LOGGER.error("缓存第" + num + "条图片数据失败，" + "+图片数据格式不争确");
+                return;
             }
             //获取map中的图片
             List<byte[]> picList = picMap.get(ctx.channel());
