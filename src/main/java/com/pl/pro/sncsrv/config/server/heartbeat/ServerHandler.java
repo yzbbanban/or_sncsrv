@@ -140,6 +140,10 @@ public class ServerHandler extends HeartbeatHandler {
                 picList = new ArrayList<byte[]>();
                 picMap.put(ctx.channel(), picList);
             }
+            if (picList.size() > num) {
+                LOGGER.info("上一图片被覆盖" + num + "条图片数据已传：" + picList.size());
+                picList = new ArrayList<>();
+            }
             if (num == picList.size()) {
                 replyHeartBeat(ctx);
                 LOGGER.info("重复收到" + num + "条图片数据");
