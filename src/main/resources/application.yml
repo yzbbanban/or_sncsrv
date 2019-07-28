@@ -6,8 +6,8 @@ spring:
   application:
       name: pl-prd
   datasource:
-    url:  jdbc:mysql://39.98.186.132:3306/product?useUnicode=true&characterEncoding=UTF-8&useSSL=false
-    username:  product
+    url:  jdbc:mysql://47.52.221.88:3306/product?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username:  ibracket
     password:  123456
     type: com.alibaba.druid.pool.DruidDataSource
 mybatis:
@@ -17,5 +17,10 @@ mybatis:
 swagger:
   show: true
 imgpush:
-  url:  http://47.97.214.198:1118/index.php/interface/JPushImg
+  url: http://hc.sncsrv.com/index.php/interface/JPushImg
+
+del:
+  time: 1
+  url: /Users/YZBbanban/Desktop/test/ssss
+
 

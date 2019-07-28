@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -14,6 +15,7 @@ import javax.servlet.MultipartConfigElement;
 
 @SpringBootApplication(scanBasePackages = {"com.pl.pro"})
 @MapperScan("com.pl.pro.sncsrv.dao")
+@EnableScheduling
 public class SncsrvApplication {
 
     public static void main(String[] args) {

@@ -112,7 +112,7 @@
     </select>
 
     <!--获取产品id-->
-    <select id="queryProIdBySid" resultType="String">
+    <select id="queryProIdBySid" resultType="string">
       SELECT id
       FROM product
       where ssid=#{ssid}
@@ -143,13 +143,18 @@
                 #{productId,jdbcType=VARCHAR},
             </if>
             <if test="timestamp != null">
-               #{timestamp,jdbcType=VARCHAR},
+                #{timestamp,jdbcType=VARCHAR},
             </if>
             <if test="imageUrl != null">
                 #{imageUrl,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
+
+    <delete id="deleteImg">
+        DELETE FROM product_record
+        WHERE `timestamp` &lt;=#{time}
+    </delete>
 
     <insert id="saveProMessage" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO productmessage

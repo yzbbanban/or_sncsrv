@@ -5,6 +5,7 @@ import com.pl.pro.sncsrv.domain.orm.PageParamDTO;
 import com.pl.pro.sncsrv.domain.vo.ProductVO;
 import com.pl.pro.sncsrv.domain.vo.TypeDetailVO;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -85,10 +86,12 @@ public interface ProductService {
 
     /**
      * 获取产品唯一编码
+     *
      * @param ssid
      * @return
      */
     int getProUidCount(String ssid);
 
     void saveImg(String imgStr, String channelId);
+
 }

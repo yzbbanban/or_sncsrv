@@ -7,6 +7,7 @@ import com.pl.pro.sncsrv.domain.dto.ProductUpdateDTO;
 import com.pl.pro.sncsrv.domain.dto.ProductUseableDTO;
 import com.pl.pro.sncsrv.domain.vo.ProductVO;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -71,4 +72,11 @@ public interface ProductDao {
     void saveImgUrl(ProductImgAddDTO dto);
 
     void saveProMessage(ProductImgAddDTO dto);
+    /**
+     * delete image
+     *
+     * @param time time
+     * @return effect row
+     */
+    int deleteImg(Date time);
 }
