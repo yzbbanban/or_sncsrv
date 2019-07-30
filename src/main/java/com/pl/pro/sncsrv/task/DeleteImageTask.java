@@ -36,13 +36,12 @@ public class DeleteImageTask {
     @Value("${del.url}")
     String delUrl;
 
-    @Async
-    @Scheduled(cron = "0/10 * * * * ?")
+    @Scheduled(cron = "0/30 * * * * ?")
     @Transactional(rollbackFor = Exception.class)
     public void deleteTask() {
         logger.info("======执行删除图片程序======");
         //获取当天 0 点
-        Date date = getZeroTime();
+        Date date = getZeroTime(delTime);
         logger.info("====开始时间====> {}", date);
         int row = productDao.deleteImg(date);
         //删除成功
@@ -70,15 +69,12 @@ public class DeleteImageTask {
         }
     }
 
-    public Date getZeroTime() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date());
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        Date zero = calendar.getTime();
-        System.out.println(zero);
-        return zero;
+    public Date getZeroTime(String delTime) {
+        long delT = Long.parseLong(delTime);
+        long time = System.currentTimeMillis() - 60L * 1000 * delT;
+        Date d = new Date(time);
+        System.out.println(d);
+        return d;
     }
 
 }

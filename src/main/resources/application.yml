@@ -20,7 +20,7 @@ imgpush:
   url: http://hc.sncsrv.com/index.php/interface/JPushImg
 
 del:
-  time: 1
+  time: 1440
   url: /Users/YZBbanban/Desktop/test/ssss
 
 

@@ -1,9 +1,9 @@
 package com.pl.pro.sncsrv.config.server.heartbeat;
 
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
-import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 /**
@@ -14,11 +14,13 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class StartServerListener implements ApplicationListener<ApplicationReadyEvent> {
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
-        if(event.getApplicationContext().getParent() == null) {
+        if (event.getApplicationContext().getParent() == null) {
             new Server(9995, 30).run();
-            System.err.println("begin start");
+            logger.info("begin start");
         }
     }
 }

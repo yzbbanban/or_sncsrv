@@ -15,7 +15,7 @@ import javax.servlet.MultipartConfigElement;
 
 @SpringBootApplication(scanBasePackages = {"com.pl.pro"})
 @MapperScan("com.pl.pro.sncsrv.dao")
-@EnableScheduling
+//@EnableScheduling
 public class SncsrvApplication {
 
     public static void main(String[] args) {
