@@ -141,16 +141,16 @@ public class ServerHandler extends HeartbeatHandler {
                 picMap.put(ctx.channel(), picList);
             }
             if (picList.size() > num) {
-                LOGGER.info("上一图片被覆盖" + num + "条图片数据已传：" + picList.size());
+                LOGGER.info("上一图片被覆盖，当前传输为第：" + num + "条数据，图片数据已传：" + picList.size());
                 picList = new ArrayList<>();
             }
             if (num == picList.size()) {
+                LOGGER.info("重复收到第" + num + "条图片数据，回复OK");
                 replyHeartBeat(ctx);
-                LOGGER.info("重复收到" + num + "条图片数据");
                 return;
             } else {
                 picList.add(data);
-                LOGGER.info("保存第" + picList.size() + "条图片数据");
+                LOGGER.info("保存第" + num + "条图片数据,总数据为： "+picList.size());
             }
             //获取要传多少次
             int sum = byteToInt(data[4]) << 8 | byteToInt(data[5]);
