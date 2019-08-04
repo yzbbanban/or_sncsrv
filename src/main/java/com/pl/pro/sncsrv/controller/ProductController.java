@@ -64,7 +64,7 @@ public class ProductController {
             orderByte[i] = (byte) Integer.parseInt(orders[i], 16);
         }
         response = ChannelUtil.writeMsgSync(orderByte, ctx.channel(), 5);
-        LOGGER.info("send response is" + response.toString());
+//        LOGGER.info("send response is" + response.toString());
         LOGGER.info("send order.order is" + ProtocolUtils.readByteToHex(orderByte));
 
 //		if (order.equals("A0101")) {
