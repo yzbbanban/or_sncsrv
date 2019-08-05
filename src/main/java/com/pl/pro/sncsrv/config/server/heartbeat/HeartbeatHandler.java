@@ -50,7 +50,7 @@ public abstract class HeartbeatHandler extends SimpleChannelInboundHandler<ByteB
     }
 
     protected void handleReaderIdle(ChannelHandlerContext ctx) {
-        LOGGER.error(ctx.channel().id().asLongText() + "---READER_IDLE---");
+        LOGGER.error(ctx.channel().id().asLongText() + "---READER_IDLE---close");
         //心跳重新恢复
         try {
             replayHeartChannel(ctx);
