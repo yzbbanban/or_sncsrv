@@ -485,10 +485,12 @@ public class ServerHandler extends HeartbeatHandler {
 
     @Override
     protected void replayHeartChannel(ChannelHandlerContext ctx) {
-        LOGGER.info("replayHeartChannel==>" + ctx.channel().id().asLongText());
-        ByteBuf buf = ctx.channel().alloc().buffer();
-        buf.writeBytes(OK);
-        ctx.writeAndFlush(buf);
+        if (ctx.channel().isActive()) {
+            LOGGER.info("replayHeartChannel==>" + ctx.channel().id().asLongText());
+            ByteBuf buf = ctx.channel().alloc().buffer();
+            buf.writeBytes(OK);
+            ctx.writeAndFlush(buf);
+        }
     }
 
 

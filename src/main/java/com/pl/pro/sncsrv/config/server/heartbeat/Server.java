@@ -43,7 +43,7 @@ public class Server {
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
                             ChannelPipeline p = socketChannel.pipeline();
-                            p.addLast(new IdleStateHandler(idleTime, 15, 10, TimeUnit.SECONDS));
+                            p.addLast(new IdleStateHandler(idleTime, 0, 0, TimeUnit.SECONDS));
                             p.addLast(new ServerHandler());
                         }
                     }).option(ChannelOption.SO_BACKLOG, 128)

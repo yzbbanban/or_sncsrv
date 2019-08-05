@@ -53,15 +53,20 @@ public abstract class HeartbeatHandler extends SimpleChannelInboundHandler<ByteB
         LOGGER.error(ctx.channel().id().asLongText() + "---READER_IDLE---close");
         //心跳重新恢复
         try {
-            replayHeartChannel(ctx);
-            LOGGER.info("心跳恢复");
+            if (ctx.channel().isActive()) {
+                replayHeartChannel(ctx);
+                LOGGER.info("心跳恢复");
+            } else {
+                LOGGER.error("channel 无效，重置");
+                removeChannel(ctx);
+                ctx.close();
+            }
         } catch (Exception e) {
             LOGGER.error("心跳异常：" + ExceptionUtils.getStackTrace(e));
             removeChannel(ctx);
             ctx.disconnect();
         }
-//		removeChannel(ctx);
-//		ctx.close();
+
     }
 
     protected void handleWriterIdle(ChannelHandlerContext ctx) {
