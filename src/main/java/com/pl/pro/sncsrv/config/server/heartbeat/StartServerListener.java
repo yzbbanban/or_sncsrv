@@ -19,7 +19,7 @@ public class StartServerListener implements ApplicationListener<ApplicationReady
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
         if (event.getApplicationContext().getParent() == null) {
-            new Server(9995, 30).run();
+            new Server(9995, 60).run();
             logger.info("begin start");
         }
     }

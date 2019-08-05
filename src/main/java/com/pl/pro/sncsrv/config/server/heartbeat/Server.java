@@ -22,40 +22,42 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.timeout.IdleStateHandler;
 
+import java.util.concurrent.TimeUnit;
+
 public class Server {
-	private Integer port;
-	private Integer readerIdleTimeSeconds;
+    private Integer port;
+    private Integer readerIdleTimeSeconds;
 
-	public Server(Integer port, Integer readerIdleTimeSeconds) {
-		this.port = port;
-		this.readerIdleTimeSeconds = readerIdleTimeSeconds;
-	}
+    public Server(Integer port, Integer readerIdleTimeSeconds) {
+        this.port = port;
+        this.readerIdleTimeSeconds = readerIdleTimeSeconds;
+    }
 
-	public void run() {
-		NioEventLoopGroup bossGroup = new NioEventLoopGroup();
-		NioEventLoopGroup workGroup = new NioEventLoopGroup();
-		final int idleTime = readerIdleTimeSeconds;
-		try {
-			ServerBootstrap bootstrap = new ServerBootstrap();
-			bootstrap.group(bossGroup, workGroup).channel(NioServerSocketChannel.class)
-					.childHandler(new ChannelInitializer<SocketChannel>() {
-						protected void initChannel(SocketChannel socketChannel) throws Exception {
-							ChannelPipeline p = socketChannel.pipeline();
-							p.addLast(new IdleStateHandler(idleTime, 0, 0));
-							p.addLast(new ServerHandler());
-						}
-					}).option(ChannelOption.SO_BACKLOG, 128)
-					.option(ChannelOption.RCVBUF_ALLOCATOR, new FixedRecvByteBufAllocator(1500))
-					.childOption(ChannelOption.SO_KEEPALIVE, true);
+    public void run() {
+        NioEventLoopGroup bossGroup = new NioEventLoopGroup();
+        NioEventLoopGroup workGroup = new NioEventLoopGroup();
+        final int idleTime = readerIdleTimeSeconds;
+        try {
+            ServerBootstrap bootstrap = new ServerBootstrap();
+            bootstrap.group(bossGroup, workGroup).channel(NioServerSocketChannel.class)
+                    .childHandler(new ChannelInitializer<SocketChannel>() {
+                        protected void initChannel(SocketChannel socketChannel) throws Exception {
+                            ChannelPipeline p = socketChannel.pipeline();
+                            p.addLast(new IdleStateHandler(idleTime, 15, 10, TimeUnit.SECONDS));
+                            p.addLast(new ServerHandler());
+                        }
+                    }).option(ChannelOption.SO_BACKLOG, 128)
+                    .option(ChannelOption.RCVBUF_ALLOCATOR, new FixedRecvByteBufAllocator(1500))
+                    .childOption(ChannelOption.SO_KEEPALIVE, true);
 
-			ChannelFuture ch = bootstrap.bind(this.port).sync();
-			ch.channel().closeFuture().sync();
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		} finally {
-			bossGroup.shutdownGracefully();
-			workGroup.shutdownGracefully();
-		}
-	}
+            ChannelFuture ch = bootstrap.bind(this.port).sync();
+            ch.channel().closeFuture().sync();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            bossGroup.shutdownGracefully();
+            workGroup.shutdownGracefully();
+        }
+    }
 
 }

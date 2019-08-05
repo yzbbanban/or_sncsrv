@@ -48,6 +48,8 @@ public class ServerHandler extends HeartbeatHandler {
 
     public static ConcurrentHashMap<Channel, List<byte[]>> picMap = new ConcurrentHashMap<Channel, List<byte[]>>();
 
+    public static ConcurrentHashMap<Channel, Long> channelTimeMap = new ConcurrentHashMap<Channel, Long>();
+
 //	@Autowired
 //	private ProductService productService;
 
@@ -90,7 +92,8 @@ public class ServerHandler extends HeartbeatHandler {
     }
 
     protected void channelRead(ChannelHandlerContext ctx, byte[] data) throws Exception {
-
+//        超时时间重置
+//        channelTimeMap.put(ctx.channel(), System.currentTimeMillis());
         Channel channel = ctx.channel();
         String channelId = ctx.channel().id().asLongText();
         System.err.println("时间：" + System.currentTimeMillis() + " id: "
@@ -151,7 +154,7 @@ public class ServerHandler extends HeartbeatHandler {
                 return;
             } else {
                 picList.add(data);
-                LOGGER.info("保存第" + num + "条图片数据,总数据为： "+picList.size());
+                LOGGER.info("保存第" + num + "条图片数据,总数据为： " + picList.size());
             }
             //获取要传多少次
             int sum = byteToInt(data[4]) << 8 | byteToInt(data[5]);
