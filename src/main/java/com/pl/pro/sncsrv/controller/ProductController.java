@@ -31,6 +31,25 @@ public class ProductController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
 
+    @RequestMapping(value = "/online")
+    ResultBean onLine(HttpServletRequest request) throws Exception {
+        ResultBean result = new ResultBean();
+        String ssid = request.getParameter("ssid");
+        ChannelHandlerContext ctx = null;
+        try {
+            ctx = ServerHandler.channelMap.get(ssid);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (null == ctx) {
+            LOGGER.error("ssid not online");
+            result.setResult("ssid not online");
+            result.setResultCode("NG");
+            return result;
+        }
+
+        return result;
+    }
 
     @RequestMapping(value = "/control")
     ResultBean control(HttpServletRequest request) throws Exception {
