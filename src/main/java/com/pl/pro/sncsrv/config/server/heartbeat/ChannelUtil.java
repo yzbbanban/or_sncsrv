@@ -13,9 +13,9 @@ public class ChannelUtil {
 
     public static byte[] writeMsgSync(byte[] msg, Channel channel, int timeout) throws Exception {
         if (channel.isActive()) {
-//            synchronized (channel) {
+            synchronized (channel) {
                 Attribute<byte[]> attr = channel.attr(AttributeKey.valueOf(channel.id().asLongText()));
-//                synchronized (attr) {
+                synchronized (attr) {
                     attr.set(msg);
                     logger.info("发消息:" + ProtocolUtils.readByteToHex(msg));
                     ByteBuf buf = channel.alloc().buffer();
@@ -30,8 +30,8 @@ public class ChannelUtil {
                     } else {
                         return null;
                     }
-//                }
-//            }
+                }
+            }
         }
         return null;
     }

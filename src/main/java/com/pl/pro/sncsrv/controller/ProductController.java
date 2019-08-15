@@ -47,7 +47,7 @@ public class ProductController {
             result.setResultCode("NG");
             return result;
         }
-
+        result.setResult("OK");
         return result;
     }
 
