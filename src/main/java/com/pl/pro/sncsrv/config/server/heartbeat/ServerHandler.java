@@ -13,11 +13,8 @@ import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -42,13 +39,32 @@ public class ServerHandler extends HeartbeatHandler {
 
     public static final String PATH = "/root/pic/";
 
-    public static ConcurrentHashMap<String, ChannelHandlerContext> channelMap = new ConcurrentHashMap<String, ChannelHandlerContext>();
+    public static ConcurrentHashMap<String, ChannelHandlerContext> channelMap = new ConcurrentHashMap<>();
 
     public static ConcurrentHashMap<Channel, List<Byte>> tempMap = new ConcurrentHashMap<Channel, List<Byte>>();
 
     public static ConcurrentHashMap<Channel, List<byte[]>> picMap = new ConcurrentHashMap<Channel, List<byte[]>>();
 
     public static ConcurrentHashMap<Channel, Long> channelTimeMap = new ConcurrentHashMap<Channel, Long>();
+
+
+    public static void main(String[] args) {
+        ConcurrentHashMap<String, Map<String, String>> channelMap = new ConcurrentHashMap<>();
+
+        Map<String, String> map1 = new HashMap<>(2);
+        Map<String, String> map2 = new HashMap<>(2);
+        map1.put("1", "222");
+        map2.put("2", "3333");
+
+
+        channelMap.put("1111", map1);
+        channelMap.put("3333", map2);
+        System.out.println("==1===>" + channelMap);
+        System.out.println("==2===>" + channelMap.values().remove(map2));
+        System.out.println("==3===>" + channelMap);
+
+
+    }
 
 //	@Autowired
 //	private ProductService productService;
@@ -497,7 +513,9 @@ public class ServerHandler extends HeartbeatHandler {
     @Override
     protected void removeChannel(ChannelHandlerContext ctx) {
         Channel channel = ctx.channel();
-        channelMap.values().remove(channel);
+        String channelId = ctx.channel().id().asLongText();
+        boolean res = channelMap.values().remove(ctx);
+        LOGGER.info("remove channel===>id:{}==ctx: {}", channelId, channel);
         authChannel.remove(channel);
     }
 

@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.pl.pro.sncsrv.domain.dto.ProductControllerDTO;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,9 +33,9 @@ public class ProductController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
 
     @RequestMapping(value = "/online")
-    ResultBean onLine(HttpServletRequest request) throws Exception {
+    ResultBean onLine(String ssid) throws Exception {
+        LOGGER.info("/online==> ssid {}", ssid);
         ResultBean result = new ResultBean();
-        String ssid = request.getParameter("ssid");
         ChannelHandlerContext ctx = null;
         try {
             ctx = ServerHandler.channelMap.get(ssid);
@@ -48,14 +49,16 @@ public class ProductController {
             return result;
         }
         result.setResult("OK");
+        LOGGER.info("/online==> result {}", result);
         return result;
     }
 
     @RequestMapping(value = "/control")
-    ResultBean control(HttpServletRequest request) throws Exception {
+    ResultBean control(ProductControllerDTO dto) throws Exception {
+        LOGGER.info("/control==> dto {}", dto);
         ResultBean result = new ResultBean();
-        String ssid = request.getParameter("ssid");
-        String order = request.getParameter("order");
+        String ssid = dto.getSsid();
+        String order = dto.getOrder();
         LOGGER.info("ssid===>{},order-===>{}", ssid, order);
         if (StringUtils.isBlank(ssid) || StringUtils.isBlank(order)) {
             result.setResult("ssid is empty");
@@ -82,7 +85,7 @@ public class ProductController {
         for (int i = 0; i < orders.length; i++) {
             orderByte[i] = (byte) Integer.parseInt(orders[i], 16);
         }
-        response = ChannelUtil.writeMsgSync(orderByte, ctx.channel(), 5);
+        response = ChannelUtil.writeMsgSync(orderByte, ctx.channel(), 3);
 //        LOGGER.info("send response is" + response.toString());
         LOGGER.info("send order.order is" + ProtocolUtils.readByteToHex(orderByte));
 
@@ -119,6 +122,7 @@ public class ProductController {
             System.err.println("无消息返回");
             result.setResult("NG");
         }
+        LOGGER.info("/control==> result {}", result);
         return result;
 
     }
@@ -134,6 +138,7 @@ public class ProductController {
             productBean.setPort(String.valueOf(address.getPort()));
             list.add(productBean);
         }
+        LOGGER.info("/querylist==>  {}", list);
         return list;
     }
 }

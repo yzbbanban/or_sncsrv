@@ -21,9 +21,9 @@ import java.util.Arrays;
  * @author wangban
  * @date 11:50 2018/10/30
  */
-@Aspect
-@Component
-@Order(1)
+//@Aspect
+//@Component
+//@Order(1)
 public class LogAspect {
 
     private Logger log = Logger.getLogger(getClass());
