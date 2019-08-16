@@ -54,8 +54,9 @@ public abstract class HeartbeatHandler extends SimpleChannelInboundHandler<ByteB
         //心跳重新恢复
         try {
             if (ctx.channel().isActive()) {
-                replayHeartChannel(ctx);
-                LOGGER.info("心跳恢复");
+                LOGGER.error("channel 杀了，重置");
+                removeChannel(ctx);
+                ctx.close();
             } else {
                 LOGGER.error("channel 无效，重置");
                 removeChannel(ctx);

@@ -497,7 +497,8 @@ public class ServerHandler extends HeartbeatHandler {
     @Override
     protected void removeChannel(ChannelHandlerContext ctx) {
         Channel channel = ctx.channel();
-        channelMap.values().remove(channel);
+        LOGGER.info("===>"+ ctx.channel().id().asLongText());
+        channelMap.values().remove(ctx);
         authChannel.remove(channel);
     }
 
@@ -604,5 +605,8 @@ public class ServerHandler extends HeartbeatHandler {
         }
         return hex;
     }
+
+
+
 
 }
